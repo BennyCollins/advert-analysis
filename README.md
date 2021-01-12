@@ -15,26 +15,28 @@ We are tasked with finding out if there is a text colour that will render a high
 
 ## main() Function:
 Arguments:
-- *file_path* (required):
+- ***file_path*** (required):
     - File path for csv file to be fed into **clicks_csv_to_dataframe**, which loads the csv file into a dataframe, *df*.
-- *permutations* (default=30,000):
+- ***permutations*** (default=30,000):
     - Determines the number of permutations used in our permutation tests.
     - Fed into **find_significant_colours**, which is used to determine if there are any colours that produce a higher number of clicks.
-- *heatmap*:
+- ***heatmap***:
     - If we instead set heatmap to True, then the **generate_heatmap** function is initiated, generating a heatmap of the p-value for each colour paired with blue.
 
 ### csv_clicks_to_dataframe
-- Loads the csv into a dataframe.
+- Required function in **main()**.
+- Loads the csv, specified by *file_path*, into a dataframe.
 - Minimizes the amount of unnecessary information in the new dataframe:
      - Removes columns containing view counts, as the view count for each colour is 100 daily without exception.
-- The column listing the different colours is set to act as the row indices for the dataframe.
+    - The column listing the different colours is set to act as the row indices for the dataframe.
 - The returned dataframe, *df*, is an argument to both the **find_significant_colours** and **generate_heatmap** functions.
 
 ### find_significant_colours
-- Primary function in **main()**: used to find any colours that perform better than the blue coloured adverts.
+- Primary function in **main()**.
+- Finds colours that perform better than the blue coloured adverts.
 - Arguments:
-    - *df*: fed in from **clicks_csv_to_dataframe**.
-    - *permutations*: fed in from the second argument in the **main()** function.
+    - ***df***: fed in from **clicks_csv_to_dataframe**.
+    - ***permutations***: fed in from the second argument in the **main()** function.
     - Both of these are fed through the other two functions in this section.
 
 #### permutation_test:
@@ -42,7 +44,7 @@ Arguments:
 - Returns the p-value computed from the mean click counts for blue and another colour, specified by the argument *colour_clicks*.
 
 #### superior_click_colour_p_values:
-- The function begins by filtering out all of the colours that have inferior daily mean click counts to blue.
+- Filters out all of the colours that have inferior daily mean click counts to blue.
 - Iterates through the remaining colours, collecting the relevant p-value in relation to the blue advert clicks using the **permutation_test** function.
 - Returns a colour to p-value dictionary (*colour_p_value_dict*).
 
@@ -50,9 +52,9 @@ Arguments:
 - The final process: carried out in the main body of the **find_significant_colours** function.
 - A process used to counteract the effects of data dredging:
     - When oversampling leads to a statistically significant p-value being computed that may be false or misleading.
-- The standard significance level is 0.05: a computed p-value lower than 0.05 is considered to show statistical significance.
+- The standard significance level is 0.05: a p-value lower than 0.05 is considered to show statistical significance.
 - The Bonferroni correction divides the significance level by the number of permutation tests that have been carried out:
-    - Our function determines the new significance level by dividing 0.05 by the number of colours in *colour_p_value_dict* returned by **superior_click_colour_p_values**.
+    - Our function determines the new significance level by dividing 0.05 by the number of colours in *colour_p_value_dict*.
 - Iterates through colours in *colour_p_value_dict*: if a colour's p-value is below the new significance level, the colour and associated p-value are added to a dictionary, *significant_colours*, which is then returned.
 
 ### generate_heatmap
@@ -71,7 +73,7 @@ When we run our **main()** function, we are returned only one colour, Ultramarin
 
 ### P-Value Heatmap
 
-![P-Value Heatmap](images/p_value_heatmap.png)
+![P-Value Heatmap](images/colours_p_value_heatmap.png)
 |:--:|
 | *P-Value Heatmap computed with permutations=30000* |
 
