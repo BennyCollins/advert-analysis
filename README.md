@@ -18,8 +18,8 @@ Arguments:
 - *file_path* (required):
     - File path for csv file to be fed into **clicks_csv_to_dataframe**, which loads the csv file into a dataframe, *df*.
 - *permutations* (default=30,000):
-        - Determines the number of permutations used in our permutation tests.
-        - Fed into **find_significant_colours**, which is used to determine if there are any colours that produce a higher number of clicks.
+    - Determines the number of permutations used in our permutation tests.
+    - Fed into **find_significant_colours**, which is used to determine if there are any colours that produce a higher number of clicks.
 - *heatmap*:
     - If we instead set heatmap to True, then the **generate_heatmap** function is initiated, generating a heatmap of the p-value for each colour paired with blue.
 
@@ -33,9 +33,9 @@ Arguments:
 ### find_significant_colours
 - Primary function in **main()**: used to find any colours that perform better than the blue coloured adverts.
 - Arguments:
-        - *df*: fed in from **clicks_csv_to_dataframe**.
-        - *permutations*: fed in from the second argument in the **main()** function.
-        - Both of these are fed through the other two functions in this section.
+    - *df*: fed in from **clicks_csv_to_dataframe**.
+    - *permutations*: fed in from the second argument in the **main()** function.
+    - Both of these are fed through the other two functions in this section.
 
 #### permutation_test:
 - A statistical significance test used to find the associated p-value of two separate sample means when population mean and variance are unknown.
@@ -49,10 +49,10 @@ Arguments:
 #### Bonferroni correction
 - The final process: carried out in the main body of the **find_significant_colours** function.
 - A process used to counteract the effects of data dredging:
-        - When oversampling leads to a statistically significant p-value being computed that may be false or misleading.
+    - When oversampling leads to a statistically significant p-value being computed that may be false or misleading.
 - The standard significance level is 0.05: a computed p-value lower than 0.05 is considered to show statistical significance.
 - The Bonferroni correction divides the significance level by the number of permutation tests that have been carried out:
-        - Our function determines the new significance level by dividing 0.05 by the number of colours in *colour_p_value_dict* returned by **superior_click_colour_p_values**.
+    - Our function determines the new significance level by dividing 0.05 by the number of colours in *colour_p_value_dict* returned by **superior_click_colour_p_values**.
 - Iterates through colours in *colour_p_value_dict*: if a colour's p-value is below the new significance level, the colour and associated p-value are added to a dictionary, *significant_colours*, which is then returned.
 
 ### generate_heatmap
