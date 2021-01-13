@@ -41,6 +41,7 @@ Arguments:
 
 #### permutation_test:
 - A statistical significance test used to find the associated p-value of two separate sample means when population mean and variance are unknown.
+    - The number of permutations used for the test is determined by *permutations*, passed in from **main()**.
 - Returns the p-value computed from the mean click counts for blue and another colour, specified by the argument *colour_clicks*.
 
 #### superior_click_colour_p_values:
@@ -77,4 +78,4 @@ When we run our **main()** function, we are returned only one colour, Ultramarin
 |:--:|
 | *P-Value Heatmap computed with permutations=30000* |
 
-We can see from this heatmap that, although there are a large number of colours with sufficiently low p-values to suggest statistical significance, the large majority of these colours have a lower mean clicks per day than blue.
+We can see from this heatmap that there are a large number of colours, as well as Ultramarine, that produced sufficiently low p-values to suggest statistical significance. However, the findings of our **find_significant_colours** function means that the large majority of these colours must have had a lower mean clicks per day than blue. The low p-values as well as inferior mean click counts mean that roughly 19 of the 29 colours would have diminished the efficacy of the advertising, suggesting blue was already a colour that was consistently producing relatively high clicks per view compared to many of the other colours.
