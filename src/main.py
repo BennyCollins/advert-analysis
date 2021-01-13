@@ -45,7 +45,7 @@ def collect_p_values(df, permutations):
 def generate_heatmap(df, permutations):
     colour_p_value_dict = collect_p_values(df, permutations)
     sorted_colours, sorted_p_values = zip(*sorted(colour_p_value_dict.items(), key=lambda x: x[1]))
-    plt.figure(figsize=(10, 15))
+    plt.figure(figsize=(3, 10))
     sns.heatmap([[p_value] for p_value in sorted_p_values], cmap='YlGnBu', annot=True, xticklabels=['p-value'], yticklabels=sorted_colours)
 
 
