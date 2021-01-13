@@ -45,6 +45,7 @@ def collect_p_values(df, permutations):
 def generate_heatmap(df, permutations):
     colour_p_value_dict = collect_p_values(df, permutations)
     sorted_colours, sorted_p_values = zip(*sorted(colour_p_value_dict.items(), key=lambda x: x[1]))
+    plt.figure(figsize=(3, 10))
     sns.heatmap([[p_value] for p_value in sorted_p_values], cmap='YlGnBu', annot=True, xticklabels=['p-value'], yticklabels=sorted_colours)
 
 
@@ -60,7 +61,7 @@ def superior_click_colour_p_values(df, permutations):
     return colour_p_value_dict
 
 
-def bonferroni_correction(df, permutations):
+def find_significant_colours(df, permutations):
     significant_colours = {}
     colour_p_value_dict = superior_click_colour_p_values(df, permutations)
     significance_level = 0.05 / len(colour_p_value_dict)
@@ -77,8 +78,7 @@ def bonferroni_correction(df, permutations):
 @click.option("--heatmap", is_flag=True, help="Generate heatmap?")
 def main(file_path, permutations, heatmap):
     df = clicks_csv_to_dataframe(file_path)
-    significant_colours = bonferroni_correction(df, permutations)
-    print(heatmap)
+    significant_colours = find_significant_colours(df, permutations)
     if heatmap:
         generate_heatmap(df, permutations)
         if permutations >= 30000:
