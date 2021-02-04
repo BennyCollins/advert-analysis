@@ -45,7 +45,7 @@ def collect_p_values(df, permutations):
 def generate_heatmap(df, permutations):
     colour_p_value_dict = collect_p_values(df, permutations)
     sorted_colours, sorted_p_values = zip(*sorted(colour_p_value_dict.items(), key=lambda x: x[1]))
-    plt.figure(figsize=(3, 10))
+    plt.figure(figsize=(10, 10))
     sns.heatmap([[p_value] for p_value in sorted_p_values], cmap='YlGnBu', annot=True, xticklabels=['p-value'], yticklabels=sorted_colours)
 
 
@@ -81,7 +81,7 @@ def main(file_path, permutations, heatmap):
     significant_colours = find_significant_colours(df, permutations)
     if heatmap:
         generate_heatmap(df, permutations)
-        if permutations >= 30000:
+        if permutations > 30000:
             plt.savefig("colours_p_value_heatmap.png")
         plt.show()
     print(significant_colours)
